@@ -7,8 +7,11 @@
 
 import SwiftUI
 
-protocol MainViewModelProtocol {
+protocol MainViewModelProtocol: AnyObject {
+    var searchText: String { get set }
+    var mainModel: [Article] { get }
     
+    func sendRequest()
 }
 
 extension MainContentView {
@@ -25,16 +28,11 @@ extension MainContentView {
                   switch result {
                   case .success(let response):
                           self.mainModel = response.articles
-                          print("print \(self.mainModel.count)")
-                          self.mainModel.forEach { print($0.author) }
-                      // Обрабатываем успешный ответ
                       print("Получены данные: \(response)")
                   case .failure(let error):
-                      // Обрабатываем ошибку
                       print("Произошла ошибка: \(error)")
                   }
               }
         }
-        
     }
 }
